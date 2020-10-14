@@ -1,17 +1,40 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { data, cols, structure } from './constant';
+import { Table, TableBody, TableCell, TableContainer, TableHead,TableRow, Paper } from '@material-ui/core';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
 
-let count = 0;
+const useStyles = makeStyles({
+  table: {
+    minWidth: 700,
+  },
+});
 
 function App() {
   const [table, setTable] = useState(data);
-  useEffect(()=>{
-    setTable(table)
-  }, [table])
+  const classes = useStyles();
+  
+  const StyledTableCell = withStyles((theme) => ({
+    head: {
+      backgroundColor: theme.palette.common.black,
+      color: theme.palette.common.white,
+    },
+    body: {
+      fontSize: 14,
+    },
+  }))(TableCell);
+  
+  const StyledTableRow = withStyles((theme) => ({
+    root: {
+      '&:nth-of-type(odd)': {
+        backgroundColor: theme.palette.action.hover,
+      },
+    },
+  }))(TableRow);
+
   const createDataCell = (row) => {
     return (
       row.row.map((r, i) => 
-        <td key={i}>{r.cell}</td>
+        <StyledTableCell key={i}>{r.cell}</StyledTableCell>
       )
     )
   }
@@ -19,43 +42,43 @@ function App() {
     return (
       rows.map((row, i) => 
       <React.Fragment key={i}>
-      <tr>
-        <td><div onClick={()=>row.children.push(structure)}>{`${tab}+`}</div></td>
+      <StyledTableRow>
+        <StyledTableCell><div onClick={()=>row.children.push(structure)}>{`${tab}+`}</div></StyledTableCell>
         {
           createDataCell(row)
         }
-        <td>{`-`}</td>
-      </tr>
+        <StyledTableCell>{`-`}</StyledTableCell>
+      </StyledTableRow>
       {
         row.children.length === 0 
         ? null 
-        : createDataRow(row.children, count++)
+        : createDataRow(row.children, '----')
       }
       </React.Fragment>
       )
     )
   }
   return (
-    <React.Fragment>
-      <table>
-        <thead>
-        <tr>
-        <td></td>
+      <TableContainer component={Paper}>
+      <Table className={classes.table}>
+        <TableHead>
+        <StyledTableRow>
+        <StyledTableCell></StyledTableCell>
           {
             cols.map((cell, i) => 
-              <td key={i}>{cell.cell}</td>
+              <StyledTableCell key={i}>{cell.cell}</StyledTableCell>
             )
           }
-          <td></td>
-          </tr>
-        </thead>
-        <tbody>
+          <StyledTableCell></StyledTableCell>
+          </StyledTableRow>
+        </TableHead>
+        <TableBody>
           {
-            createDataRow(table, count++)
+            createDataRow(table, '*-')
           }
-        </tbody>
-      </table>
-    </React.Fragment>
+        </TableBody>
+      </Table>
+      </TableContainer>
   );
 }
 
