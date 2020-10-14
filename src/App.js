@@ -1,25 +1,61 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import { data, cols, structure } from './constant';
+
+let count = 0;
 
 function App() {
+  const [table, setTable] = useState(data);
+  useEffect(()=>{
+    setTable(table)
+  }, [table])
+  const createDataCell = (row) => {
+    return (
+      row.row.map((r, i) => 
+        <td key={i}>{r.cell}</td>
+      )
+    )
+  }
+  const createDataRow = (rows, tab) => {
+    return (
+      rows.map((row, i) => 
+      <React.Fragment key={i}>
+      <tr>
+        <td><div onClick={()=>row.children.push(structure)}>{`${tab}+`}</div></td>
+        {
+          createDataCell(row)
+        }
+        <td>{`-`}</td>
+      </tr>
+      {
+        row.children.length === 0 
+        ? null 
+        : createDataRow(row.children, count++)
+      }
+      </React.Fragment>
+      )
+    )
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <table>
+        <thead>
+        <tr>
+        <td></td>
+          {
+            cols.map((cell, i) => 
+              <td key={i}>{cell.cell}</td>
+            )
+          }
+          <td></td>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            createDataRow(table, count++)
+          }
+        </tbody>
+      </table>
+    </React.Fragment>
   );
 }
 
