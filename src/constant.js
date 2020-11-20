@@ -4,6 +4,7 @@ export const cols = [
     { cell : 'Data 3' },
     { cell : 'Data 4' },
 ]
+export const INITIAL_VALUE = -1 ;
 export const data = [
     {
         row : [
@@ -22,6 +23,15 @@ export const data = [
                 ],
                 children : []
             },
+            {
+                row : [
+                    { cell : 'cell data 1' },
+                    { cell : 'cell data 2' },
+                    { cell : 'cell data 3' },
+                    { cell : 'cell data 4' },
+                ],
+                children : []
+            }
         ]
     },
     {
@@ -41,8 +51,26 @@ export const data = [
                 ],
                 children : []
             },
+            {
+                row : [
+                    { cell : 'cell data 1' },
+                    { cell : 'cell data 2' },
+                    { cell : 'cell data 3' },
+                    { cell : 'cell data 4' },
+                ],
+                children : []
+            }
         ]
     },
+    {
+        row : [
+            { cell : 'cell data 1' },
+            { cell : 'cell data 2' },
+            { cell : 'cell data 3' },
+            { cell : 'cell data 4' },
+        ],
+        children : []
+    }
 ];
 export const structure = { 
     row : [
@@ -62,4 +90,14 @@ export const structure = {
         children : []
     },
 ]
+}
+
+export const object = {
+    row : [
+        { cell : 'cell data 1' },
+        { cell : 'cell data 2' },
+        { cell : 'cell data 3' },
+        { cell : 'cell data 4' },
+    ],
+    children : []
 }
